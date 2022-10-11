@@ -1,0 +1,9 @@
+;; shadow-cljs configuration
+{:deps true
+
+ :dev-http {8700 "public"}
+
+ :builds {:hanami {:output-dir "public/js/compiled"
+                  :asset-path "/js/compiled"
+                  :target     :browser
+                  :modules {:hanami {:init-fn hanami/init}}}}}
