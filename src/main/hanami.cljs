@@ -25,8 +25,6 @@
 
    [com.rpl.specter :as sp]
 
-   [reagent.core :as rgt]
-
    [re-com.core
     :as rcm
     :refer [h-box v-box box gap line h-split v-split scroller
