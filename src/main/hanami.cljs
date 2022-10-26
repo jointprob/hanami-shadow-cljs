@@ -176,7 +176,8 @@
               :DATA (mapv (fn [[x y]] {:x x :y y :m 5.7}) obsdist))]
    hmi/sv!))
 
-(defn ^:dev/after-load start []
+;;; Startup ============================================================== ;;; 
+(when-let [elem (js/document.querySelector "#app")]
   (hc/add-defaults
    :HEIGHT 400 :WIDTH 450
    :USERDATA {:tab {:id :TID, :label :TLBL, :opts :TOPTS}
@@ -190,7 +191,28 @@
    :TID :expl1, :TLBL #(-> :TID % name cljstr/capitalize)
    :OPTS (hc/default-opts :vgl)
    :TOPTS (hc/default-opts :tab))
-  (app-init (. js/document (getElementById "app")))
+  (app-init elem))
+
+;;; We will run this one visualization upon page load!
+;;; From a clojureverse data-science comment/example
+(->
+ (hc/xform ht/bar-chart
+           :TITLE "Top headline phrases"
+           :X :x-value :Y :y-value :YTYPE "nominal"
+           :DATA
+           [{:x-value 8961 :y-value "will make you"}
+            {:x-value 4099 :y-value "this is why"}
+            {:x-value 3199 :y-value "can we guess"}
+            {:x-value 2398 :y-value "only X in"}
+            {:x-value 1610 :y-value "the reason is"}
+            {:x-value 1560 :y-value "are freaking out"}
+            {:x-value 1425 :y-value "X stunning photos"}
+            {:x-value 1388 :y-value "tears of joy"}
+            {:x-value 1337 :y-value "is what happens"}
+            {:x-value 1287 :y-value "make you cry"}])
+ hmi/sv!)
+
+(defn ^:dev/after-load start []
   (js/console.log "start"))
 
 (defn ^:export init []
